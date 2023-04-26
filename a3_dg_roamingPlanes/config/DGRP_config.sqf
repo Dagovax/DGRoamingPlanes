@@ -1,0 +1,41 @@
+
+DGRP_MessageName = "DG RoamingPlanes";
+
+if (!isServer) exitWith {
+	["Failed to load configuration data, as this code is not being executed by the server!", DGRP_MessageName] call DGCore_fnc_log;
+};
+
+["Loading configuration data...", DGRP_MessageName] call DGCore_fnc_log;
+
+/****************************************************************************************************/
+/********************************  CONFIG PART. EDIT AS YOU LIKE!!  ************************************/
+/****************************************************************************************************/
+
+// Generic
+DGRP_DebugMode			= false; 	// Only for creator. Leave it on false
+DGRP_MinAmountPlayers	= 0; 		// Amount of players required to start the missions spawning. Set to 0 to have no wait time for players
+DGRP_MinSleepTime		= 60;		// Minimum amount of seconds to sleep until new initialization starts.
+DGRP_MaxSleepTime		= 200; 		// Maximum amount of seconds to sleep until new initialization starts.
+DGRP_MaxPlanes			= 6; 		// Amount of these type AI to be active at the same time.
+DGRP_EnableMarker		= false;	// Will show a marker
+
+// ATC
+DGRP_EnableATC			= true;		// Sends ATC land and take off messages to nearby players
+DGRP_ATCRange			= 1500;		// Range around the airfield players will be notified of ATC messages/sounds
+DGRP_ATCApproachRange	= 500;		// Aproach range for incoming aircraft. They will contact ATC at this distance from the airport
+DGRP_ATCResponseTime	= 5; 		// Seconds in wich the ATC will respond to the aircraft call. If you enabled sounds and length is longer than this, they will interfere.
+DGRP_RunwayTakeoff		= 26;		// Call sign of the runway the planes will take off from. Will be used in messages. (does not affect anything else)
+DGRP_RunwayLand			= 10;		// Call sign of the runway the planes will land on. Will be used in messages. (does not affect anything else)
+
+// This default input uses Base Defense Systems sounds by Dagovax. If you don't have this mod: BDS -> (https://steamcommunity.com/sharedfiles/filedetails/?id=2631873636)
+// Needs to be any sound defined in CfgSounds. Check config viewer for available sounds
+DGRP_ATCTraffic = // Array in text format: [Aircraft Departure sound  | ATC Clearance sound | Aircraft Approach sound | ATC Approuch sound]
+[
+	// ["BDS_CallSign_Arma3_Delivery_Departure", "BDS_ATC_Arma3_Delivery_Departure", "BDS_CallSign_Arma3_Delivery_Arrival", "BDS_ATC_Arma3_Delivery_Arrival"],
+	// ["BDS_CallSign_BDS_Departure", "BDS_ATC_BDS_Departure", "BDS_CallSign_BDS_Arrival", "BDS_ATC_BDS_Arrival"],
+	// ["BDS_CallSign_Cessna215b_Departure", "BDS_ATC_Cessna215b_Departure", "BDS_CallSign_Cessna215b_Arrival", "BDS_ATC_Cessna215b_Arrival"],
+	// ["BDS_CallSign_DGCore_Airlines_Departure", "BDS_ATC_DGCore_Airlines_Departure", "BDS_CallSign_DGCore_Airlines_Arrival", "BDS_ATC_DGCore_Airlines_Arrival"]
+];
+
+DGRP_Configured = true;
+["Configuration loaded", DGRP_MessageName] call DGCore_fnc_log;
