@@ -38,7 +38,7 @@ while {true} do // Main Loop
 		_reInitialize = false;
 		if(count DGRP_RoamingQueue >= DGRP_MaxPlanes) exitWith{};
 		
-		_planeInfo = [] call DGCore_fnc_spawnCivilPlane;
+		_planeInfo = ["", DGRP_AllowDamage, DGRP_Side, DGRP_WaitTime, DGRP_SetCaptive] call DGCore_fnc_spawnCivilPlane;
 		if(isNil "_planeInfo") exitWith{}; // Something bad happened
 		_newGroup = _planeInfo select 0;
 		_ilsStart = _planeInfo select 1;
@@ -51,6 +51,9 @@ while {true} do // Main Loop
 			_plane = [_newGroup, true] call BIS_fnc_groupVehicles select 0;
 			if(isNil "_plane") exitWith{};
 			if(isNull _plane) exitWith{};
+			// First wait until initial wait time;
+			waitUntil{sleep DGRP_WaitTime; true };
+			
 			_planeName = getText (configFile >> "CfgVehicles" >> (typeOf _plane) >> "displayName");
 			if(DGRP_EnableATC) then
 			{
@@ -64,7 +67,7 @@ while {true} do // Main Loop
 					_useAudio = false;
 				};
 				
-				_startNearbyPlayers = [_ilsStart, 1000] call DGCore_fnc_getNearbyPlayers;
+				_startNearbyPlayers = [_ilsStart, DGRP_ATCRange] call DGCore_fnc_getNearbyPlayers;
 				_sndSelection = selectRandom DGRP_ATCTraffic;
 				if(!isNil "_startNearbyPlayers") then
 				{
@@ -102,7 +105,7 @@ while {true} do // Main Loop
 					_currentPos = getPos _plane;
 					if( _currentPos distance2D _ilsEnd <= DGRP_ATCApproachRange) exitWith
 					{
-						_endNearbyPlayers = [_ilsEnd, 1000] call DGCore_fnc_getNearbyPlayers;
+						_endNearbyPlayers = [_ilsEnd, DGRP_ATCRange] call DGCore_fnc_getNearbyPlayers;
 						if(!isNil "_endNearbyPlayers") then
 						{
 							if (count _endNearbyPlayers > 0) then
@@ -149,6 +152,9 @@ while {true} do // Main Loop
 				while {!isNull _newGroup} do
 				{
 					if(isNull _newGroup) exitWith{};
+					_DGCore_civilReady = _newGroup getVariable ["DGCore_civilReady", false];
+					if(_DGCore_civilReady) exitWith{}; // Plane landed and dude left the plane.
+					
 					_unitAlive = false;
 					{
 						if(alive _x) exitWith

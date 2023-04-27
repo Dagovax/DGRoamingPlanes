@@ -18,6 +18,10 @@ DGRP_MinSleepTime		= 60;		// Minimum amount of seconds to sleep until new initia
 DGRP_MaxSleepTime		= 200; 		// Maximum amount of seconds to sleep until new initialization starts.
 DGRP_MaxPlanes			= 6; 		// Amount of these type AI to be active at the same time.
 DGRP_EnableMarker		= false;	// Will show a marker
+DGRP_AllowDamage		= true;		// Plane can take damage. Default false
+DGRP_Side				= CIVILIAN;	// Side of the unit that spawns. Choose between CIVILIAN | EAST | WEST | INDEPENDENT
+DGRP_SetCaptive			= false;	// Pilot will be ignored by everyone, and no map icon will be visible. Civilians will be ignored by AI, even with setCaptive to false, unless Civilian side is made enemy
+DGRP_WaitTime			= 0;		// Amount in seconds the plane will wait after spawn until taking off. (set this higher for player taxi). Default 0 (planes will take off instantly)
 
 // ATC
 DGRP_EnableATC			= true;		// Sends ATC land and take off messages to nearby players
