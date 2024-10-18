@@ -152,7 +152,7 @@ while {true} do // Main Loop
 				while {!isNull _newGroup} do
 				{
 					if(isNull _newGroup) exitWith{};
-					_DGCore_civilReady = _newGroup getVariable ["DGCore_civilReady", false];
+					_DGCore_civilReady = _newGroup getVariable ["DGCore_unitReady", false];
 					if(_DGCore_civilReady) exitWith{}; // Plane landed and dude left the plane.
 					
 					_unitAlive = false;
